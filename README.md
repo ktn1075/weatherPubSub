@@ -11,7 +11,8 @@
 ### 1.  기능 
   - 날씨 정보 수집 
     - 기상청 Open API로 설정된 특정지역들의 날씨 정보 30분 마다 요청 
-      - 기상청에서 제공하는 2단계 방식으로 지역 설정 (서울특별시 / 종로구)
+      - 기상청에서 제공하는 2단계 방식으로 지역 설정</br>
+        ![image](https://user-images.githubusercontent.com/37799491/233822351-77c47732-325f-4c01-97e7-6c437cae99b9.png)
       - API 요청 정보 (기상청 제공)</br>
         Method : GET </br>
         ![image](https://user-images.githubusercontent.com/37799491/233821777-a6459874-aca0-41c2-ada7-60146e02c107.png)
