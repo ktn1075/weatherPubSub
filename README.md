@@ -10,10 +10,19 @@
 ## Server 
 ### 1.  기능 
   - 날씨 정보 수집 
-    - https://openweathermap.org에 API로 설정된 특정도시들의 날씨 정보 요청 
-    - 스케쥴 30분 
+    - 기상청 Open API로 설정된 특정지역들의 날씨 정보 30분 마다 요청 
+      - 기상청에서 제공하는 2단계 방식으로 지역 설정</br>
+        ![image](https://user-images.githubusercontent.com/37799491/233822351-77c47732-325f-4c01-97e7-6c437cae99b9.png)
+      - API 요청 정보 (기상청 제공)</br>
+        Method : GET </br>
+        ![image](https://user-images.githubusercontent.com/37799491/233821777-a6459874-aca0-41c2-ada7-60146e02c107.png)
+      - API 응답 정보 (기상청 제공)</br>
+        DATATYPE : JSON </br>
+        ![image](https://user-images.githubusercontent.com/37799491/233821936-34f97f5e-3216-493e-94ef-95a07971a841.png)
   - 클라이언트 날씨 정보 전송
-    - 날씨 정보가 수집되는 즉시 구독 중인 구독자들에게 날씨 정보 전달  
+    - 날씨 정보가 수집되는 즉시 특정지역 마다 구독중인 구독자들에게 날씨 정보 전달  
+  - 지역별 X,Y 좌표 관리 기능 
+    - 기상청에서 제공하는 지역 별 X,Y 좌표 자료 관리
 ### 2. 구조 
   - C# .NET 기반 
   
