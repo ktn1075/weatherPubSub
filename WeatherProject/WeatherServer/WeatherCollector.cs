@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 class WeatherCollector
 {
-    private readonly string KMA_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
+    private readonly static string KMA_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
 
     private readonly static NLog.Logger _logger =  NLog.LogManager.GetCurrentClassLogger();
 
-    private readonly string RES_NAME = "/getUltraSrtNcst";
+    private readonly static string RES_NAME = "/getUltraSrtNcst";
 
     // 기상청에서 할당받은 자신의 KEY 입력
-    private readonly string SERVICE_KEY = "YOUR KEY";
+    private readonly static string SERVICE_KEY = "YOUR KEY";
 
     // localName은 지역 카테고리 1 + 카테고리 로 만든다. Res에 딕셔너리로 보관해야할듯 
-    public JObject GetWeatherData(string localName)
+    public static JObject GetWeatherData(string localName)
     {
         _logger.Info($"날씨 정보 API 요청 : {localName}");
 
