@@ -30,7 +30,7 @@ class Pub
 
         // ZeroMq에서 pub/sub 방식에서 메시지 처음의 바이트 값과 비교하여
         // 등록한 토픽이 맞는지 확인 한다.
-
+        // 등록 코드 
         _topics.Add("서울시:성북구", JsonConvert.SerializeObject(new {vtr=1}));
         _topics.Add("서울시:중구", "온도:12도, 바람:5ms");
 

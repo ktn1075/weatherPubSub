@@ -32,17 +32,20 @@ class WeatherCollector
             {
                 Timeout = 3000
             };
-           
+            
+            // 해당 값은 고정된 값이므로 건드리지 않는다.
             req.AddQueryParameter("ServiceKey", SERVICE_KEY);
             req.AddQueryParameter("pageNo", "1");
             req.AddQueryParameter("numOfRows", "1000");
             req.AddQueryParameter("dataType", "JSON");
 
-            // base_date 는 현재일자, base_time 은 현재 시간 기준중 가장 가까운 시간으로 설정한다.
-            req.AddQueryParameter("base_date", "20230423");
-            req.AddQueryParameter("base_time", "0600");
+            // base_date 는 현재일자, base_time 은 현재 시간 기준중 -1시간으로 설정한다
+            req.AddQueryParameter("base_date", DateTime.Now.ToString("yyyyMMdd"));
+
+            string baseTime = DateTime.Now.AddHours(-1).ToString("HHmm");
+            req.AddQueryParameter("base_time", baseTime);
             
-            // X.Y 좌표는 LOCALNAME 을 통해 지정
+            // X.Y 좌표는 외부 리소스를 통해 값을 가져온다.
             req.AddQueryParameter("nx", "60");
             req.AddQueryParameter("ny", "127");
 
