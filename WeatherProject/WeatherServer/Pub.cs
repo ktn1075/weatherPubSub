@@ -34,6 +34,8 @@ class Pub
         _topics.Add("서울시:성북구", JsonConvert.SerializeObject(new {vtr=1}));
         _topics.Add("서울시:중구", "온도:12도, 바람:5ms");
 
+        WeatherCollector.GetWeatherData("");
+
         using (var context = new ZContext())
         using(var publisher = new ZSocket(context, ZSocketType.PUB))
         {

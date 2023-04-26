@@ -13,8 +13,6 @@ namespace WeatherServer
             Pub weatehrPub = new Pub();
 
             weatehrPub.Start();
-
-
         }   
     }
 }
