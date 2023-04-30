@@ -42,8 +42,8 @@ class RestRequest
 
             var t = JsonConvert.DeserializeObject<Dictionary<string, string>>(ctx.Request.DataAsString);
 
-            keyValuePairs.Add("GroupId", "kwfkwefwkfnkafalwl230432jk3");
-            keyValuePairs.Add("AgentId", "awerawerwerwrawr");
+            
+
 
             await ctx.Response.Send(JsonConvert.SerializeObject(keyValuePairs));
         });
