@@ -10,6 +10,10 @@ namespace WeatherServer
     {
         static void Main(string[] args)
         {
+            
+
+
+
             Pub weatehrPub = new Pub();
 
             weatehrPub.Start();

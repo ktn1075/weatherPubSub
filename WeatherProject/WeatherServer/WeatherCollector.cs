@@ -10,16 +10,14 @@ using System.Threading.Tasks;
 
 class Res
 {
-    // 실행 시 마다 파일읽어 오게 변경 한다.
     private static Dictionary<string, object> _localPoint;
 
-    public static Dictionary<string, object> getLocalPoint()
+    public static Dictionary<string, dynamic> getLocalPoint()
     {
         if (_localPoint != null)
             return _localPoint;
 
-        _localPoint = new Dictionary<string, object>();
-
+        _localPoint = new Dictionary<string, dynamic>();
         _localPoint["서울특별시:종로구"] = new { nx = 60, ny = 127 };
         _localPoint["서울특별시:중구"] = new { nx = 60, ny = 127 };
         _localPoint["서울특별시:용산구"] = new { nx = 60, ny = 126 };
@@ -285,9 +283,9 @@ class WeatherCollector
     private readonly static string RES_NAME = "/getUltraSrtNcst";
 
     // 기상청에서 할당받은 자신의 KEY 입력
-    private readonly static string SERVICE_KEY = "YOUR KEY";
+    private readonly static string SERVICE_KEY = "ajFes+XqXnhRAic/ZeV7sf6SYPpJUIETOptH7ojsakBSudcuv/kScz1xuC+oQ3Jxh5M87jpxPzkwNvfBtQmhdw==";
 
-    private static Dictionary<string, object> _localPoint = Res.getLocalPoint();
+    private static Dictionary<string, dynamic> _localPoint = Res.getLocalPoint();
 
     // localName은 지역 카테고리 1 + 카테고리 로 만든다. Res에 딕셔너리로 보관해야할듯 
     public static JObject GetWeatherData(string localName)
@@ -296,52 +294,47 @@ class WeatherCollector
 
         JObject result = null;
 
-        try
+        foreach (var item in _localPoint)
         {
-            var restClient = new RestClient(KMA_URL);
-            var req = new RestRequest(RES_NAME)
+            try
             {
-                Timeout = 3000
-            };
-            
-            // 해당 값은 고정된 값이므로 건드리지 않는다.
-            req.AddQueryParameter("ServiceKey", SERVICE_KEY);
-            req.AddQueryParameter("pageNo", "1");
-            req.AddQueryParameter("numOfRows", "1000");
-            req.AddQueryParameter("dataType", "JSON");
+                var restClient = new RestClient(KMA_URL);
+                var req = new RestSharp.RestRequest(RES_NAME)
+                {
+                    Timeout = 3000
+                };
 
-            // base_date 는 현재일자, base_time 은 현재 시간 기준중 -1시간으로 설정한다
-            req.AddQueryParameter("base_date", DateTime.Now.ToString("yyyyMMdd"));
+                // 해당 값은 고정된 값이므로 건드리지 않는다.
+                req.AddQueryParameter("ServiceKey", SERVICE_KEY);
+                req.AddQueryParameter("pageNo", "1");
+                req.AddQueryParameter("numOfRows", "1000");
+                req.AddQueryParameter("dataType", "JSON");
 
-            string baseTime = DateTime.Now.AddHours(-1).ToString("HHmm");
-            req.AddQueryParameter("base_time", baseTime);
+                // base_date 는 현재일자, base_time 은 현재 시간 기준중 -1시간으로 설정한다
+                req.AddQueryParameter("base_date", DateTime.Now.ToString("yyyyMMdd"));
 
-            foreach (var item in _localPoint)
-            {
-                dynamic obj = item.Value;
+                string baseTime = DateTime.Now.AddHours(-1).ToString("HHmm");
+                req.AddQueryParameter("base_time", baseTime);
 
-                int nx = obj.nx;
-                int ny = obj.ny;
+                    // 나중에 변경           
+                    int nx = item.Value.nx;
+                    int ny = item.Value.ny;
 
-                req.AddQueryParameter("nx", nx.ToString());
-                req.AddQueryParameter("ny", ny.ToString());
+                    req.AddQueryParameter("nx", nx.ToString());
+                    req.AddQueryParameter("ny", ny.ToString());
 
+                    var res = restClient.Get(req);
 
+                    if (res.StatusCode == HttpStatusCode.OK)
+                    {
+                        // 데이터가 제대로 왔는지 확인하고 왔으면 아니면 다른 방법 고민한다.
+                        result = JObject.Parse(res.Content);
+                    }
             }
-
-
-            var res = restClient.Get(req);
-
-            if (res.StatusCode == HttpStatusCode.OK)
+            catch (Exception e)
             {
-                // 데이터가 제대로 왔는지 확인하고 왔으면 아니면 다른 방법 고민한다.
-                result = JObject.Parse(res.Content);
+                _logger.Error("WeatherData Collect Error :{0}", e);
             }
-
-        }
-        catch (Exception e)
-        {
-            _logger.Error("WeatherData Collect Error :{0}",e);
         }
 
         return result;
