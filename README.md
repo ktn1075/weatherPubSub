@@ -19,6 +19,8 @@
       - API 응답 정보 (기상청 제공)</br>
         DATATYPE : JSON </br>
         ![image](https://user-images.githubusercontent.com/37799491/233821936-34f97f5e-3216-493e-94ef-95a07971a841.png)
+      - 자료 Category (기상청 제공)</br>
+        
   - 클라이언트 날씨 정보 전송
     - 날씨 정보가 수집되는 즉시 특정지역 마다 구독중인 구독자들에게 날씨 정보 전달  
   - 지역별 X,Y 좌표 관리 기능 
