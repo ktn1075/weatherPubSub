@@ -39,6 +39,7 @@ class RestRequest
     }
 
     // Rest/API 
+    // TODO : API 두개를 합쳐야 겠다.
     private static void SetRestHandlers()
     {
         // agent 등록
@@ -56,15 +57,17 @@ class RestRequest
                 {
                     throw new Exception("Parameter error");
                 }
-   
+
+                WeatherCollector.subscribe(responsedata["subArea"]);
             }
             catch(Exception e) 
             {
                 _logger.Error(e);
                 result = false;
             }
-           
+
             await ctx.Response.Send(JsonConvert.SerializeObject(new { success = result }));
+
         });
 
         // agent 삭제
@@ -72,8 +75,26 @@ class RestRequest
         {
             Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
 
-            // 삭제 코드 등록
-            
+            bool result = true;
+
+            try
+            {
+                var responsedata = JsonConvert.DeserializeObject<Dictionary<string, string>>(ctx.Request.DataAsString);
+
+                if (!responsedata.ContainsKey("subArea"))
+                {
+                    throw new Exception("Parameter error");
+                }
+
+                WeatherCollector.Unsubscribe(responsedata["subArea"]);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                result = false;
+            }
+
+            await ctx.Response.Send(JsonConvert.SerializeObject(new { success = result }));
         });
     }
 }
