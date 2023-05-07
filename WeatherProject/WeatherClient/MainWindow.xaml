@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="232" Width="413">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="223*"/>
+            <RowDefinition Height="157*"/>
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="localArea" HorizontalAlignment="Left" Height="26" Margin="173,90,0,0" VerticalAlignment="Top" Width="154" IsReadOnly="True">
+            <ComboBoxItem/>
+            <ComboBoxItem/>
+        </ComboBox>
+        <Button Content="Button" Margin="169,20,184,45" Grid.Row="1"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="173,48,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="154"/>
+        <Label Content="현재 구독 지역 :" Margin="71,47,245,54"/>
+        <Label Content="구독 지역 선택 :" Margin="71,90,245,11"/>
+
+
     </Grid>
 </Window>
